@@ -1,37 +1,32 @@
 
 import express from 'express';
+import bcrypt from 'bcrypt';
 import cors from 'cors';
-import path from 'path';
-import { PostModel } from './schemas/post.schema.js';
 import { UserModel } from './schemas/user.schema.js'
 import mongoose from 'mongoose';
 
 const app = express();
-const __dirname = path.resolve();
 const PORT = 3501;
 
+//connect mongo database
 mongoose.connect('mongodb://localhost:27017/test')
 .then(() => {
     console.log('Connected to DB Successfully');
 })
 .catch(err => console.log('Failed to Connect to DB', err))
 
+// Salt and Hash for password encryption
+var saltRounds = 10;
+var password = "Fkdj^45ad"
 
 
+
+// cors- for browser
 app.use(cors());
 app.use(express.json());
 
 app.get('/', function(req, res) {
    res.json({message:'test'});
-});
-
-app.get('/posts', function(req,res){
-    PostModel.find()
-    .then(data => res.json({data}))
-    .catch(err => {
-        res.status(501)
-        res.json({errors: err});
-    })
 });
 
 app.get('/users', function(req,res){
@@ -43,36 +38,30 @@ app.get('/users', function(req,res){
     })
 });
 app.post('/create-user', function(req,res){
-    const {name, email, username} = req.body;
-    const user = new UserModel({
-        name,
-        username,
-        email,
+    const {name, email, username, password} = req.body;
+    bcrypt.genSalt(saltRounds, function(err,salt) {
+        //console.log("salt = ",salt);
+        bcrypt.hash(password,salt,function(err,hash) {
+            // store hash in database here
+            //console.log("Hash = " + hash);
+            const user = new UserModel({
+                name,
+                username,
+                email,
+                password
+            });
+            user.save()
+            .then((data) => {
+                res.json({data});
+            })
+            .catch(err => {
+                res.status(501);
+                res.json({errors: err});
+            })
+        })
+    
     });
-    user.save()
-    .then((data) => {
-        res.json({data});
-    })
-    .catch(err => {
-        res.status(501);
-        res.json({errors: err});
-    })
-});
-
-app.post('/create-post', function(req,res){
-    const {title, body} = req.body;
-    const post = new PostModel({
-        title,
-        body,
-    });
-    post.save()
-    .then((data) => {
-        res.json({data});
-    })
-    .catch(err => {
-        res.status(501);
-        res.json({errors: err});
-    })
+    
 });
 
 app.delete('/delete-user/:id', function(req, res) {
