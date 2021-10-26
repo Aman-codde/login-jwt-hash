@@ -17,7 +17,7 @@ mongoose.connect('mongodb://localhost:27017/test')
 
 // Salt and Hash for password encryption
 var saltRounds = 10;
-var password = "Fkdj^45ad"
+//var password = "Fkdj^45ad"
 
 
 
@@ -39,18 +39,20 @@ app.get('/users', function(req,res){
 });
 app.post('/create-user', function(req,res){
     const {name, email, username, password} = req.body;
+    // salt and hash orignial password to encrypted password
     bcrypt.genSalt(saltRounds, function(err,salt) {
-        //console.log("salt = ",salt);
+        console.log("salt = ",salt);
         bcrypt.hash(password,salt,function(err,hash) {
+            console.log("Hash = " + hash);
             // store hash in database here
-            //console.log("Hash = " + hash);
             const user = new UserModel({
                 name,
                 username,
                 email,
-                password
+                password: hash // pass password as type hash, it will assign hashed password generated to password property
             });
-            user.save()
+            user
+            .save()
             .then((data) => {
                 res.json({data});
             })
