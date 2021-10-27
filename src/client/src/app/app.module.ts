@@ -14,13 +14,15 @@ import * as fromUser from './store/reducers/user/user.reducer';
 import { EffectsModule } from '@ngrx/effects';
 import { UserEffects } from './store/effects/user/user.effects';
 import { PageUsersComponent } from './pages/page-users/page-users.component';
+import { SignInComponent } from './components/sign-in/sign-in.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     UsersListComponent,
     UserInputComponent,
-    PageUsersComponent
+    PageUsersComponent,
+    SignInComponent
   ],
   imports: [
     BrowserModule,
