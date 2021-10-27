@@ -66,6 +66,34 @@ app.post('/create-user', function(req,res){
     
 });
 
+//login user(sign in)
+app.post('/login', function(req,res) {
+    const {username,password} = req.body;
+
+    UserModel
+    .findOne({username})
+    .then((user:any) => {
+        if(user == null)
+        {
+            console.log("Username not found");
+            res.json({message: "Username not found!"});
+            return;
+        }
+        console.log("username found : ",user);
+        bcrypt.compare(password, `${user?.password}`, function(err, result) {
+            if(result) {
+                console.log("It matches!");
+                res.json({message: "Successfully logged in!"});
+            }
+            else {
+                console.log("Invalid Password");
+                res.sendStatus(403)
+            }
+        })
+    })
+    .catch(err => res.json({err}))
+})
+
 app.delete('/delete-user/:id', function(req, res) {
     const _id = req.params.id;
     UserModel.findByIdAndDelete(_id).then((data) => {
