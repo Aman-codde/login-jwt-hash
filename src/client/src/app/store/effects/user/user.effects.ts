@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { EMPTY, of } from 'rxjs';
-import { catchError, map, mergeMap } from 'rxjs/operators';
+import { catchError, map, mergeMap, tap } from 'rxjs/operators';
 import { UserService } from 'src/app/services/user.service';
 import {
   createUser,
@@ -13,6 +13,9 @@ import {
   loadUsers,
   loadUsersFailure,
   loadUsersSuccess,
+  loginUser,
+  loginUserFailure,
+  loginUserSuccess,
   updateUser,
   updateUserFailure,
   updateUserSuccess,
@@ -51,6 +54,19 @@ export class UserEffects {
         this.userService.createUser(action.data).pipe(
           map((data) => createUserSuccess({ data })),
           catchError((error) => of(createUserFailure({ error })))
+        )
+      )
+    )
+  );
+
+  loginUser$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(loginUser),
+      mergeMap((action) => 
+        this.userService.login(action.data).pipe(
+          tap(data => console.log("data in effects: ",data)),
+          map((data) => loginUserSuccess({ data })),
+          catchError((error) => of(loginUserFailure({ err: error })))
         )
       )
     )
