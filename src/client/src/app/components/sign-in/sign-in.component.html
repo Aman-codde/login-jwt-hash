@@ -1,0 +1,9 @@
+
+<form [formGroup] = 'authUserGroup'>
+    <input type="text" formControlName='username' placeholder="username">
+    <input type="text" formControlName='password' placeholder="password">
+    <button (click)='authUser()' [disabled]='authUserGroup.invalid'>Log in</button>
+    <p>New to Amazon?</p>
+    <button (click) = "goToSignUp()">Create Account</button>
+</form>
+
