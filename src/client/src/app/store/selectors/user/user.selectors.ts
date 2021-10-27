@@ -12,6 +12,11 @@ export const usersSelector = createSelector(
 export const selectedUserSelector = createSelector(
   userFeatureSelector,
   (state) => state.selectedUser
+);
+
+export const loggedUserSelector = createSelector(
+  userFeatureSelector,
+  (state) => state.loggedUser
 )
 
 
