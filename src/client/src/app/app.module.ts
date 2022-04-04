@@ -3,6 +3,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
+
+
 import { AppComponent } from './app.component';
 import { UsersListComponent } from './components/users-list/users-list.component';
 import { UserInputComponent } from './components/user-input/user-input.component';
@@ -15,6 +17,9 @@ import { EffectsModule } from '@ngrx/effects';
 import { UserEffects } from './store/effects/user/user.effects';
 import { PageUsersComponent } from './pages/page-users/page-users.component';
 import { SignInComponent } from './components/sign-in/sign-in.component';
+import { SocketIoConfig } from 'ngx-socket-io';
+
+const config: SocketIoConfig = { url: !environment.production ? 'http://localhost:3000/' : '', options: {} };
 
 @NgModule({
   declarations: [
