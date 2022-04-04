@@ -1,10 +1,11 @@
 import express, { NextFunction, Request, Response } from "express";
+import { userRouter } from "./user.routes.js";
 
-const apiRouter = express.Router();
+export const apiRouter = express.Router();
 
 
 // routes go here
-
+apiRouter.use('/users', userRouter);
 
 
 // response handler
@@ -22,9 +23,11 @@ apiRouter.use((err: Error, req: Request, res: Response, next: NextFunction) => {
     if(err.name == "ValidationError") {
         res.status(400).send(err);
     }
+    console.log(Object.keys(err));
+    res.status(500).send(err);
 });
 
 apiRouter.all('/*', function(req,res){
     console.log("Not Found");
     res.sendStatus(404);
-})
+});

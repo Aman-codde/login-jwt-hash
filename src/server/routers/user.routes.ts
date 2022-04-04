@@ -1,8 +1,13 @@
 import express from "express";
 import bcrypt from 'bcrypt';
+import jwt from "jsonwebtoken";
+import dotenv from "dotenv";
 import { UserModel } from "../schemas/user.schema.js";
 
-const userRouter = express.Router();
+export const userRouter = express.Router();
+const access_secret = process.env.ACCESS_TOKEN_SECRET as string;
+
+dotenv.config();
 
 // Salt and Hash for password encryption
 var saltRounds = 10;
@@ -46,7 +51,7 @@ userRouter.post('/create-user', function(req,res){
     
 });
 
-//login user(sign in)
+// login user(sign in)
 userRouter.post('/login', function(req,res) {
     const {username,password} = req.body;
 
