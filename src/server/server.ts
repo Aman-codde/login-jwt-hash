@@ -10,7 +10,7 @@ dotenv.config();
 
 const app = express();
 const __dirname = path.resolve();
-const PORT = 3501;
+const PORT = 3000;
 
 //connect mongo database
 mongoose.connect('mongodb://localhost:27017/test')
