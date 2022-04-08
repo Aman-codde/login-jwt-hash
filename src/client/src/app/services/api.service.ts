@@ -6,7 +6,7 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root'
 })
 export class ApiService {
-  baseUrl:string = !environment.production ? 'http://localhost:3501/api/' : '/api/';
+  baseUrl:string = !environment.production ? 'http://localhost:3000/api/' : '/api/';
   constructor(private http: HttpClient) 
   { }
 

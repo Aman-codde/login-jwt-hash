@@ -16,7 +16,7 @@ const PORT = 3000;
 const server = http.createServer(app);
 
 export let io = new Server(server, {
-    cors: {origin: ["http://localhost:4200"]},
+    cors: {origin: '*'},
 });
 
 //connect mongo database
@@ -36,16 +36,22 @@ app.get('/', function(req, res) {
    res.json({message:'test'});
 });
 
-// server.listen(PORT, () => {
-//     console.log("listening to port "+ PORT);
-// });
+
+
 
 io.on('connection',(socket) => {
     console.log(" user connected with socketId = ", socket.id);
-})
-
-
-app.listen(PORT, function(){
-    console.log( `starting at localhost http://localhost:${PORT}`);
+    socket.on('disconnect', () => {
+        console.log("user disconnected", socket.id);
+    })
+    // send msg to front end
+    socket.emit("message","hello to sockets");
 });
+
+
+server.listen(PORT, () => {
+    console.log("listening to port "+ PORT);
+});
+
+
 

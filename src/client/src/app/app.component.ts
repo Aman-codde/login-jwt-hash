@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { Socket } from 'ngx-socket-io';
+import { SocketService } from './services/socket.service';
 
 @Component({
   selector: 'app-root',
@@ -7,4 +9,13 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'client';
+  message: any = "";
+  constructor(
+    private socket: Socket, 
+    private socketService: SocketService) 
+  {
+    this.message = this.socketService.getMessage();
+  }
+
+
 }

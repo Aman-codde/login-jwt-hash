@@ -17,7 +17,7 @@ import { EffectsModule } from '@ngrx/effects';
 import { UserEffects } from './store/effects/user/user.effects';
 import { PageUsersComponent } from './pages/page-users/page-users.component';
 import { SignInComponent } from './components/sign-in/sign-in.component';
-import { SocketIoConfig } from 'ngx-socket-io';
+import { SocketIoConfig, SocketIoModule } from 'ngx-socket-io';
 
 const config: SocketIoConfig = { url: !environment.production ? 'http://localhost:3000/' : '', options: {} };
 
@@ -34,6 +34,7 @@ const config: SocketIoConfig = { url: !environment.production ? 'http://localhos
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
+    SocketIoModule.forRoot(config),
     ReactiveFormsModule,
     StoreModule.forRoot(reducers, { metaReducers }),
     !environment.production ? StoreDevtoolsModule.instrument() : [],
