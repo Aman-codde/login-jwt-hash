@@ -14,12 +14,14 @@ export class SocketService {
   }
 
   getMessage() {
-    // const getMsg = new Promise((resolve, reject) => {
+
+    //this.socket
+    //  const getMsg = new Promise((resolve, reject) => {
     //   this.socket.on('message',(data: string)=> {
     //     resolve(data);
     //     console.log("inside services: ",data)
     //   });
-    // })
+    //  })
     // return getMsg;
     return this.socket.fromEvent('message');
   }

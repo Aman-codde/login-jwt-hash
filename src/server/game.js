@@ -40,6 +40,51 @@ const game = {
     players: [],
     quiz: null,
 }
+//select quiz => select quiz and start
+//lobby => enter username and join game(only if the quiz started) 
+// question => show one question with answers as radio button and save answer
+// leader board => after each question, display each player score
+
+/* players = [
+    {
+        socketId: '12hfjdf',
+        playerName: 'kim';
+        host: true;
+        answer: 'all of the above';
+        points: 0;
+        done: false;
+    },
+    {
+        socketId: '19jjkjk',
+        playerName: 'larry';
+        answer: 'all of the above';
+        points: 0;
+        done: false;
+    }
+  ]
+
+  quiz = {
+      title: 'mongooose quiz',
+      questions: [
+          {
+            question_title: 'what is mongoose?',
+            answers: [
+                {
+                    option: 'database',
+                    correct: true
+                },
+                {
+                    ..................
+                }
+            ]
+          },
+          {
+            .................
+          }
+      ]
+  }
+*/  
+
 setTimeout(() => {
     console.log('first person connects');
     const socketId = 1;
