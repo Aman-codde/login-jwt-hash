@@ -30,7 +30,7 @@ const config: SocketIoConfig = { url: !environment.production ? 'http://localhos
     SignInComponent
   ],
   imports: [
-    BrowserModule,
+    BrowserModule.withServerTransition({ appId: 'serverApp' }),
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
